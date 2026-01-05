@@ -1,0 +1,198 @@
+/* --- APP.CSS CẬP NHẬT --- */
+
+/* Container chung của Projects */
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  gap: 80px; /* Khoảng cách giữa các dự án */
+  padding-bottom: 50px;
+}
+
+/* Card dự án: Layout ngang */
+.project-card {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  background: transparent; /* Bỏ nền card để trông thoáng hơn */
+  padding: 0;
+  border-radius: 0;
+  transition: none;
+}
+
+.project-card:hover {
+  transform: none; /* Bỏ hiệu ứng bay lên cũ */
+}
+
+/* Đảo chiều layout cho các thẻ chẵn (Zig-zag effect) */
+.project-card:nth-child(even) {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+/* Phần hình ảnh (Mockup) */
+.project-image-wrapper {
+  flex: 1;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Giả lập nền gradient nếu chưa có ảnh */
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  height: 300px; /* Chiều cao cố định cho mockup */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.project-image-wrapper:hover {
+  transform: scale(1.02);
+  border-color: var(--accent-color);
+}
+
+/* Giả lập icon hoặc text trong khung ảnh */
+.project-image-placeholder {
+  font-size: 4rem;
+  color: var(--accent-color);
+  opacity: 0.5;
+}
+
+/* Phần nội dung text */
+.project-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Xử lý căn chỉnh tags cho layout zig-zag */
+.project-card:nth-child(even) .project-tech {
+  justify-content: flex-end;
+}
+
+.project-card:nth-child(even) .project-links {
+  justify-content: flex-end;
+}
+
+/* Project Header */
+.project-header h3 {
+  font-size: 1.8rem;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.project-tag {
+  color: var(--accent-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  display: inline-block;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Mô tả */
+.project-desc {
+  color: var(--text-sub);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+/* List features */
+.project-features ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.project-features li {
+  color: var(--text-sub);
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* Dấu gạch đầu dòng custom */
+.project-features li::before {
+  content: "▹";
+  color: var(--accent-color);
+  position: absolute;
+  left: 0;
+}
+
+/* Đảo chiều dấu gạch đầu dòng cho card bên phải */
+.project-card:nth-child(even) .project-features li {
+  padding-left: 0;
+  padding-right: 20px;
+}
+.project-card:nth-child(even) .project-features li::before {
+  left: auto;
+  right: 0;
+}
+
+/* Tech Stack Chips */
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.project-tech span {
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  background: rgba(45, 212, 191, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* Links */
+.project-links {
+  display: flex;
+  gap: 20px;
+}
+
+.project-link {
+  color: var(--text-main);
+  font-weight: 600;
+  position: relative;
+}
+
+.project-link:hover {
+  color: var(--accent-color);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 968px) {
+  .project-card,
+  .project-card:nth-child(even) {
+    flex-direction: column; /* Mobile thì xếp dọc hết */
+    text-align: left;
+    gap: 30px;
+    background: var(--bg-card); /* Thêm nền trên mobile cho rõ */
+    padding: 30px;
+    border-radius: 16px;
+  }
+
+  .project-image-wrapper {
+    width: 100%;
+    height: 250px;
+  }
+
+  .project-card:nth-child(even) .project-tech,
+  .project-card:nth-child(even) .project-links {
+    justify-content: flex-start;
+  }
+
+  .project-card:nth-child(even) .project-features li {
+    padding-right: 0;
+    padding-left: 20px;
+  }
+
+  .project-card:nth-child(even) .project-features li::before {
+    right: auto;
+    left: 0;
+  }
+}
