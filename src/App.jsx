@@ -1,9 +1,38 @@
 import { useState } from "react";
 import profileImg from "./assets/avatar.jpg";
+import erdOverview from "./assets/erd-overview.png";
+import erdRental from "./assets/erd-rental-flow.png";
 import "./App.css";
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showERD, setShowERD] = useState(false);
+  const [currentERDIndex, setCurrentERDIndex] = useState(0);
+
+  const erdDiagrams = [
+    {
+      title: "Database Overview",
+      description: "Toàn bộ cấu trúc bảng và mối quan hệ giữa các thực thể",
+      image: erdOverview,
+    },
+    {
+      title: "Rental Flow & Transactions",
+      description: "Chi tiết luồng dữ liệu xử lý cho thuê xe và thanh toán",
+      image: erdRental,
+    },
+  ];
+
+  const handleNextERD = () => {
+    setCurrentERDIndex((prev) =>
+      prev === erdDiagrams.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const handlePrevERD = () => {
+    setCurrentERDIndex((prev) =>
+      prev === 0 ? erdDiagrams.length - 1 : prev - 1
+    );
+  };
 
   return (
     <div className="portfolio">
@@ -35,6 +64,7 @@ function App() {
             việc xây dựng <strong>RESTful API</strong> và quản lý luồng dữ liệu
             giữa Client - Server.
           </p>
+          <p></p>
           <div className="hero-btns">
             <a href="#projects" className="btn-primary">
               Xem dự án
@@ -80,53 +110,83 @@ function App() {
         </div>
       </section>
 
-      {/* 4. PROJECTS SECTION (Đã chỉnh sửa sang layout 1 hàng) */}
+      {/* 4. PROJECTS SECTION */}
       <section id="projects">
         <h2>Featured Projects</h2>
         <div className="projects-container">
           {/* Dự án 1: Car Rental */}
           <div className="project-card">
-            {/* Cột Ảnh (Mockup) */}
             <div className="project-image-wrapper">
-              {/* Bạn có thể thay div này bằng thẻ <img> thật sau này */}
               <div className="project-image-placeholder">🚗</div>
             </div>
 
-            {/* Cột Thông tin */}
             <div className="project-info">
-              <span className="project-tag">Full-stack (KLTN)</span>
-              <div className="project-header">
-                <h3>Car Rental System</h3>
-              </div>
+              <div className="project-info">
+                <div className="project-header">
+                  <h3>Car Rental Management System</h3>
+                </div>
 
-              <div className="project-desc">
-                <p>
-                  Hệ thống quản lý thuê xe toàn diện gồm Web Admin và Mobile
-                  App. Dự án tập trung vào xử lý nghiệp vụ đặt xe, quản lý trạng
-                  thái xe và tối ưu hóa truy vấn dữ liệu thời gian thực.
-                </p>
-              </div>
+                <div className="project-desc">
+                  <p>
+                    Hệ thống quản lý cho thuê xe gồm Web Admin và Mobile App,
+                    trong đó tôi tập trung phát triển backend và hệ thống API.
+                    Backend được thiết kế để xử lý toàn bộ nghiệp vụ cốt lõi như
+                    quản lý xe, chi nhánh, lịch thuê và giao dịch. Hệ thống hỗ
+                    trợ xác thực và phân quyền người dùng bằng JWT, mã hóa mật
+                    khẩu với bcrypt, đăng nhập bằng Google OAuth2 và xác thực
+                    OTP qua email bằng Nodemailer. Ngoài ra, backend tích hợp
+                    cổng thanh toán PayOS để xử lý các giao dịch thuê xe trực
+                    tuyến, đảm bảo tính bảo mật, ổn định và nhất quán dữ liệu
+                    giữa các nền tảng.
+                  </p>
+                </div>
 
-              <div className="project-features">
-                <ul>
-                  <li>
-                    Logic quản lý xe, đơn đặt và lịch trình thuê phức tạp.
-                  </li>
-                  <li>
-                    Thiết kế Database quan hệ người dùng - xe - giao dịch.
-                  </li>
-                  <li>Đồng bộ dữ liệu Real-time giữa Web và App.</li>
-                </ul>
-              </div>
+                <div className="project-features">
+                  <ul>
+                    <li>
+                      Thiết kế và xây dựng RESTful API cho Web Admin và Mobile
+                      App với kiến trúc backend tách biệt.
+                    </li>
+                    <li>
+                      Xây dựng hệ thống xác thực & phân quyền: JWT, bcrypt,
+                      Google OAuth2, xác thực OTP qua email.
+                    </li>
+                    <li>
+                      Xử lý nghiệp vụ thuê xe: kiểm tra xe khả dụng, quản lý
+                      trạng thái đơn thuê, tính toán chi phí và tích hợp thanh
+                      toán PayOS.
+                    </li>
+                    <li>
+                      Thiết kế database MySQL cho các thực thể: người dùng, xe,
+                      chi nhánh, lịch thuê, giao dịch và khuyến mãi.
+                    </li>
+                  </ul>
+                </div>
 
-              <div className="project-tech">
-                <span>Node.js</span>
-                <span>Express.js</span>
-                <span>MongoDB</span>
-                <span>React</span>
+                <div className="project-tech">
+                  <span>Node.js</span>
+                  <span>Express.js</span>
+                  <span>MySQL</span>
+                  <span>JWT</span>
+                  <span>Bcrypt</span>
+                  <span>Google OAuth2</span>
+                  <span>Nodemailer</span>
+                  <span>PayOS</span>
+                  <span>RESTful API</span>
+                </div>
               </div>
 
               <div className="project-links">
+                <button
+                  className="project-link"
+                  onClick={() => {
+                    setShowERD(true);
+                    setCurrentERDIndex(0);
+                  }}
+                >
+                  Database Design (ERD) ↗
+                </button>
+
                 <a
                   href="https://github.com/trantuanhao123/KLTN_Backend.git"
                   target="_blank"
@@ -135,6 +195,7 @@ function App() {
                 >
                   Backend Repo ↗
                 </a>
+
                 <a
                   href="https://github.com/trantuanhao123/KLTN_Frontend"
                   target="_blank"
@@ -184,47 +245,9 @@ function App() {
               </div>
             </div>
           </div>
-
-          {/* Dự án 3: Task Management */}
-          <div className="project-card">
-            <div className="project-image-wrapper">
-              <div className="project-image-placeholder">✅</div>
-            </div>
-
-            <div className="project-info">
-              <span className="project-tag">Productivity</span>
-              <div className="project-header">
-                <h3>Task Management Board</h3>
-              </div>
-
-              <div className="project-desc">
-                <p>
-                  Công cụ quản lý công việc theo phong cách Kanban (Trello). Hỗ
-                  trợ thao tác kéo thả (Drag & Drop) mượt mà giúp người dùng tổ
-                  chức công việc hiệu quả.
-                </p>
-              </div>
-
-              <div className="project-tech">
-                <span>React</span>
-                <span>Dnd-kit</span>
-                <span>Local Storage</span>
-              </div>
-
-              <div className="project-links">
-                <a href="#" className="project-link">
-                  Live Demo ↗
-                </a>
-                <a href="#" className="project-link">
-                  Source Code ↗
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* 5. CONTACT SECTION */}
       {/* 5. CONTACT SECTION */}
       <section id="contact">
         <div className="contact-card">
@@ -265,6 +288,64 @@ function App() {
       <footer className="footer">
         <p>© 2025 Trần Tuấn Hào. Made with Passion and React.</p>
       </footer>
+
+      {/* 7. ERD MODAL */}
+      {showERD && (
+        <div className="erd-modal-overlay" onClick={() => setShowERD(false)}>
+          <div
+            className="erd-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="erd-modal-close"
+              onClick={() => setShowERD(false)}
+            >
+              ✕
+            </button>
+
+            <div className="erd-modal-header">
+              <h2>{erdDiagrams[currentERDIndex].title}</h2>
+              <p>{erdDiagrams[currentERDIndex].description}</p>
+            </div>
+
+            <div className="erd-modal-image-wrapper">
+              <img
+                src={erdDiagrams[currentERDIndex].image}
+                alt={erdDiagrams[currentERDIndex].title}
+                className="erd-modal-image"
+              />
+            </div>
+
+            <div className="erd-modal-nav">
+              <button
+                className="erd-nav-btn erd-nav-prev"
+                onClick={handlePrevERD}
+              >
+                ← Previous
+              </button>
+
+              <div className="erd-pagination">
+                {erdDiagrams.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`erd-dot ${
+                      index === currentERDIndex ? "active" : ""
+                    }`}
+                    onClick={() => setCurrentERDIndex(index)}
+                  />
+                ))}
+              </div>
+
+              <button
+                className="erd-nav-btn erd-nav-next"
+                onClick={handleNextERD}
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
