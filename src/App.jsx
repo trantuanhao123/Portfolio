@@ -2,6 +2,9 @@ import { useState } from "react";
 import profileImg from "./assets/avatar.jpg";
 import erdOverview from "./assets/erd-overview.png";
 import erdRental from "./assets/erd-rental-flow.png";
+import hexamarketArch from "./assets/architecture-diagram.png";
+import hexamarketERD from "./assets/erd_hexamarket.png";
+
 import "./App.css";
 
 function App() {
@@ -19,6 +22,18 @@ function App() {
       title: "Rental Flow & Transactions",
       description: "Chi tiết luồng dữ liệu xử lý cho thuê xe và thanh toán",
       image: erdRental,
+    },
+    {
+      title: "Hexamarket Architecture",
+      description:
+        "Tổng quan kiến trúc hệ thống: API Layer, Service Layer, DB, Cache, Message Queue",
+      image: hexamarketArch,
+    },
+    {
+      title: "Hexamarket Database Design",
+      description:
+        "Thiết kế CSDL cho hệ thống thương mại điện tử: product, variant, inventory, order, user...",
+      image: hexamarketERD,
     },
   ];
 
@@ -100,11 +115,16 @@ function App() {
             </p>
             <h4>Công nghệ đang sử dụng:</h4>
             <div className="skills-tags">
+              <span className="skill-tag">Java</span>
+              <span className="skill-tag">Spring Boot</span>
               <span className="skill-tag">Node.js</span>
               <span className="skill-tag">Express.js</span>
-              <span className="skill-tag">RESTful API</span>
-              <span className="skill-tag">MongoDB / MySQL</span>
-              <span className="skill-tag">MVC Architecture</span>
+              <span className="skill-tag">PostgreSQL</span>
+              <span className="skill-tag">MongoDB</span>
+              <span className="skill-tag">Redis</span>
+              <span className="skill-tag">RabbitMQ</span>
+              <span className="skill-tag">JWT Auth</span>
+              <span className="skill-tag">REST API Design</span>
             </div>
           </div>
         </div>
@@ -208,39 +228,107 @@ function App() {
             </div>
           </div>
 
-          {/* Dự án 2: Weather App */}
+          {/* Dự án 2: Hexamarket E-Commerce Backend */}
           <div className="project-card">
             <div className="project-image-wrapper">
-              <div className="project-image-placeholder">☁️</div>
+              <div className="project-image-placeholder">🛒</div>
             </div>
 
             <div className="project-info">
-              <span className="project-tag">Frontend Tool</span>
+              <span className="project-tag">Enterprise Backend</span>
+
               <div className="project-header">
-                <h3>Weather Forecast App</h3>
+                <h3>Hexamarket – High Performance E-Commerce Backend</h3>
               </div>
 
               <div className="project-desc">
                 <p>
-                  Ứng dụng theo dõi thời tiết sử dụng OpenWeather API. Cung cấp
-                  thông tin nhiệt độ, độ ẩm và dự báo trong 7 ngày tới với giao
-                  diện người dùng trực quan.
+                  Hệ thống backend thương mại điện tử hiệu năng cao xây dựng
+                  bằng <strong>Spring Boot</strong>, tập trung vào xử lý đồng
+                  thời, bảo mật và tối ưu hiệu suất. Dự án mô phỏng kiến trúc
+                  backend thực tế cho nền tảng B2C với kiểm soát tồn kho chặt
+                  chẽ, caching, message queue và cơ chế chống overselling. Hệ
+                  thống cũng triển khai cơ chế{" "}
+                  <strong>Email Verification</strong> khi đăng ký tài khoản và{" "}
+                  <strong>Password Reset Flow</strong> thông qua email token,
+                  đảm bảo xác thực người dùng và tăng cường bảo mật tài khoản.
                 </p>
               </div>
 
+              <div className="project-features">
+                <ul>
+                  <li>
+                    Xây dựng hệ thống xác thực Stateless với{" "}
+                    <strong>JWT + Refresh Token Rotation</strong>, Redis Token
+                    Blacklist.
+                  </li>
+                  <li>
+                    Triển khai luồng <strong>Email Verification</strong> và{" "}
+                    <strong>Password Reset</strong> bằng{" "}
+                    <strong>Spring Boot Mail</strong>, sử dụng token ngắn hạn
+                    lưu trong Database/Redis để đảm bảo chỉ người sở hữu email
+                    mới có thể kích hoạt tài khoản hoặc thay đổi mật khẩu.
+                  </li>
+                  <li>
+                    Bảo vệ tồn kho bằng <strong>Pessimistic Locking</strong> để
+                    tránh overselling khi nhiều người mua cùng lúc.
+                  </li>
+                  <li>
+                    Sử dụng <strong>PostgreSQL JSONB + GIN Index</strong> cho
+                    thuộc tính sản phẩm động (RAM, Size, Screen...).
+                  </li>
+                  <li>
+                    Tối ưu hiệu năng với <strong>Redis Cache</strong> và xử lý
+                    tác vụ bất đồng bộ bằng <strong>RabbitMQ</strong>.
+                  </li>
+                  <li>
+                    Tự động hủy đơn chưa thanh toán sau 30 phút bằng Redis TTL /
+                    Scheduled Job.
+                  </li>
+                </ul>
+              </div>
+
               <div className="project-tech">
-                <span>React + Vite</span>
-                <span>OpenWeather API</span>
-                <span>Axios</span>
-                <span>CSS Modules</span>
+                <span>Java 21</span>
+                <span>Spring Boot</span>
+                <span>Spring Security</span>
+                <span>Spring Mail</span>
+                <span>PostgreSQL</span>
+                <span>Redis</span>
+                <span>RabbitMQ</span>
+                <span>JWT</span>
+                <span>Flyway</span>
+                <span>Docker</span>
               </div>
 
               <div className="project-links">
-                <a href="#" className="project-link">
-                  Live Demo ↗
-                </a>
-                <a href="#" className="project-link">
-                  Source Code ↗
+                <button
+                  className="project-link"
+                  onClick={() => {
+                    setShowERD(true);
+                    setCurrentERDIndex(2);
+                  }}
+                >
+                  System Architecture ↗
+                </button>
+
+                <button
+                  className="project-link"
+                  onClick={() => {
+                    setShowERD(true);
+                    setCurrentERDIndex(3);
+                  }}
+                >
+                  Database Design (ERD) ↗
+                </button>
+
+                <a
+                  href="https://github.com/trantuanhao123/SpringBoot_HexaMarket"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-link"
+                >
+                  Backend Repository ↗
                 </a>
               </div>
             </div>
